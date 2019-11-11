@@ -20,28 +20,30 @@ class HttpRequest {
         
         return new Promise((resolve, reject) => {
             
-            let ajax = new XMLHttpRequest()
+            let ajax = new XMLHttpRequest();
  
-            ajax.open(method, url)
+            ajax.open(method.toUpperCase(), url);
     
             ajax.onerror = event => {
-                reject(e)
+                reject(event)
             };
  
             ajax.onload = (event) => {
-                let obj = {}
+                let obj = {};
     
                 try {
-                    obj = JSON.parse(ajax.responseText)
+                    obj = JSON.parse(ajax.responseText);
                 } catch(e) {
-                    reject(e)
-                    console.error(e)
+                    reject(e);
+                    console.error(e);
                 }
             
-                resolve(obj)      
+                resolve(obj);      
             }
+            
+            ajax.setRequestHeader('Content-Type','application/json');
     
-            ajax.send()
+            ajax.send(JSON.stringify(params));
         })
     }
  
